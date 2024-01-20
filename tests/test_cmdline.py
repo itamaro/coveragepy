@@ -727,7 +727,7 @@ class CmdLineTest(BaseCmdLineTest):
             cov.save()
             """)
         self.cmd_executes("run --concurrency=gevent foo.py", """\
-            cov = Coverage(concurrency=['gevent'])
+            cov = Coverage(concurrency='gevent')
             runner = PyRunner(['foo.py'], as_module=False)
             runner.prepare()
             cov.start()
@@ -736,16 +736,7 @@ class CmdLineTest(BaseCmdLineTest):
             cov.save()
             """)
         self.cmd_executes("run --concurrency=multiprocessing foo.py", """\
-            cov = Coverage(concurrency=['multiprocessing'])
-            runner = PyRunner(['foo.py'], as_module=False)
-            runner.prepare()
-            cov.start()
-            runner.run()
-            cov.stop()
-            cov.save()
-            """)
-        self.cmd_executes("run --concurrency=gevent,thread foo.py", """\
-            cov = Coverage(concurrency=['gevent', 'thread'])
+            cov = Coverage(concurrency='multiprocessing')
             runner = PyRunner(['foo.py'], as_module=False)
             runner.prepare()
             cov.start()

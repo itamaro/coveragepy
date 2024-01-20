@@ -6,7 +6,6 @@
 # The light-threads packages we test against.
 
 eventlet
-gevent
 greenlet
 
 # gevent needs cffi, but only on Windows, not sure why.

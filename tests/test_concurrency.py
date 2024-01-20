@@ -24,7 +24,6 @@ import pytest
 import coverage
 from coverage import env
 from coverage.data import line_counts
-from coverage.exceptions import ConfigError
 from coverage.files import abs_file
 from coverage.misc import import_local_file
 
@@ -193,7 +192,7 @@ def cant_trace_msg(concurrency: str, the_module: Optional[ModuleType]) -> Option
         expected_out = None
     else:
         expected_out = (
-            f"Can't support concurrency={concurrency} with PyTracer, only threads are supported.\n"
+            f"Can't support concurrency={concurrency} with PyTracer, only threads are supported\n"
         )
     return expected_out
 
@@ -218,6 +217,7 @@ class ConcurrencyTest(CoverageTest):
         is the text we expect the code to produce.
 
         """
+
         self.make_file("try_it.py", code)
 
         cmd = f"coverage run --concurrency={concurrency} try_it.py"

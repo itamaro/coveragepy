@@ -511,7 +511,7 @@ class Coverage(TConfigurable):
     def _init_for_start(self) -> None:
         """Initialization for start()"""
         # Construct the collector.
-        concurrency: List[str] = self.config.concurrency or []
+        concurrency = self.config.concurrency or ()
         if "multiprocessing" in concurrency:
             if self.config.config_file is None:
                 raise ConfigError("multiprocessing requires a configuration file")

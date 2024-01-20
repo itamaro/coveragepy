@@ -46,12 +46,16 @@ class Opts:
         "", "--branch", action="store_true",
         help="Measure branch coverage in addition to statement coverage.",
     )
+    CONCURRENCY_CHOICES = [
+        "thread", "gevent", "greenlet", "eventlet", "multiprocessing",
+    ]
     concurrency = optparse.make_option(
-        "", "--concurrency", action="store", metavar="LIBS",
+        '', '--concurrency', action='store', metavar="LIB",
+        choices=CONCURRENCY_CHOICES,
         help=(
             "Properly measure code using a concurrency library. " +
-            "Valid values are: {}, or a comma-list of them."
-        ).format(", ".join(sorted(CoverageConfig.CONCURRENCY_CHOICES))),
+            "Valid values are: {}."
+        ).format(", ".join(CONCURRENCY_CHOICES)),
     )
     context = optparse.make_option(
         "", "--context", action="store", metavar="LABEL",
@@ -647,11 +651,6 @@ class CoverageScript:
         debug = unshell_list(options.debug)
         contexts = unshell_list(options.contexts)
 
-        if options.concurrency is not None:
-            concurrency = options.concurrency.split(",")
-        else:
-            concurrency = None
-
         # Do something.
         self.coverage = Coverage(
             data_file=options.data_file or DEFAULT_DATAFILE,
@@ -664,7 +663,7 @@ class CoverageScript:
             omit=omit,
             include=include,
             debug=debug,
-            concurrency=concurrency,
+            concurrency=options.concurrency,
             check_preimported=True,
             context=options.context,
             messages=not options.quiet,
